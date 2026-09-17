@@ -41,6 +41,24 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  @keyframes moveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .bg-animated-gradient {
+    background: linear-gradient(270deg, #3b2a22, #b58c5c, #F0EBE1);
+    background-size: 400% 400%;
+    animation: moveGradient 15s ease infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

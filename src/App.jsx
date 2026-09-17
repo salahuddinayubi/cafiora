@@ -14,7 +14,7 @@ export default function App() {
   return (
     <CartProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-parchment sm:p-4">
+        <div className="min-h-screen bg-animated-gradient sm:p-4">
           <div className="relative mx-auto flex min-h-screen w-full flex-col bg-parchment sm:rounded-canvas sm:border sm:border-terracotta/15 sm:overflow-hidden">
             <FloatingHeader />
             <div className="flex-1">
