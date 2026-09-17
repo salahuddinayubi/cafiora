@@ -35,6 +35,7 @@ export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [toast, setToast] = useState(null); // { id, itemName }
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   const openCart = useCallback(() => setIsCartOpen(true), []);
   const closeCart = useCallback(() => setIsCartOpen(false), []);
@@ -169,6 +170,10 @@ export function CartProvider({ children }) {
     setItems([]);
   }, []);
 
+  const clearOrderHistory = useCallback(() => {
+    setOrderHistory([]);
+  }, []);
+
   const cartCount = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),
     [items]
@@ -184,8 +189,24 @@ export function CartProvider({ children }) {
   const tax = useMemo(() => Math.round(subtotal * 0.05), [subtotal]);
   const total = subtotal + tax;
 
+  const completeOrder = useCallback((orderId) => {
+    if (items.length === 0) return;
+
+    setOrderHistory((current) => [
+      ...current,
+      {
+        orderId,
+        items,
+        total,
+        date: new Date().toISOString(),
+      },
+    ]);
+    setItems([]);
+  }, [items, total]);
+
   const value = {
     items,
+    orderHistory,
     addDrink,
     addSnack,
     addBean,
@@ -193,6 +214,8 @@ export function CartProvider({ children }) {
     decrementItem,
     removeItem,
     clearCart,
+    clearOrderHistory,
+    completeOrder,
     cartCount,
     subtotal,
     tax,

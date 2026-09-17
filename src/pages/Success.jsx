@@ -13,14 +13,14 @@ function generateOrderId() {
 }
 
 export default function Success() {
-  const { clearCart } = useCart();
+  const { completeOrder } = useCart();
   const [orderId] = useState(generateOrderId);
 
-  // Clear the cart once, on arrival at the success page.
+  // Complete the order once, on arrival at the success page.
   useEffect(() => {
-    clearCart();
+    completeOrder(orderId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [orderId]);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-6 text-center">
@@ -35,12 +35,20 @@ export default function Success() {
           Your order <span className="text-ristretto">{orderId}</span> is being prepared.
         </p>
 
-        <Link
-          to="/"
-          className="mt-10 inline-block border-b border-ristretto/30 pb-1 font-sans text-sm text-ristretto transition-colors duration-300 hover:border-terracotta hover:text-terracotta"
-        >
-          Back to the menu
-        </Link>
+        <div className="mt-10 flex flex-col items-center gap-4">
+          <Link
+            to="/"
+            className="inline-block border-b border-ristretto/30 pb-1 font-sans text-sm text-ristretto transition-colors duration-300 hover:border-terracotta hover:text-terracotta"
+          >
+            Back to the menu
+          </Link>
+          <Link
+            to="/cart"
+            className="inline-block rounded-full bg-ristretto px-6 py-3 font-sans text-sm text-parchment transition-colors duration-300 hover:bg-terracotta"
+          >
+            View Order History
+          </Link>
+        </div>
       </motion.div>
     </div>
   );
